@@ -1,0 +1,12 @@
+server:
+  port: 9999
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: user-web
+          uri: lb://USER-WEB
+          predicates:
+            - Path=/user/**
+  application:
+    name: wechat-gateway

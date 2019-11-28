@@ -1,0 +1,14 @@
+#从配置文件管理获取配置
+spring:
+  cloud:
+    config:
+      uri: http://localhost:8888
+      name: application #前
+      profile: eureka #后
+
+#自动更新
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ["*"]
