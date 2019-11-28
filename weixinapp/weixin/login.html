@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.css" rel="stylesheet" />
+		<script src="js/mui.js"></script>
+		<script type="text/javascript">
+			mui.init();
+
+			mui.plusReady(function() {
+				//添加触屏事件
+				// tap 触屏事件
+				document.getElementById("register_button").addEventListener("tap", function() {
+					// 移动端弹框信息 
+					plus.nativeUI.toast("点击了新用户");
+					//plus.nativeUI.alert("你好")
+					//跳转到注册页面
+					plus.webview.open("register.html", "register.html");
+				})
+			})
+		</script>
+	</head>
+	
+	<body>
+		<div style="float: none;">
+			<!-- 标题 -->
+			<header class="mui-bar mui-bar-nav">
+				<h1 class="mui-title">登录</h1>
+			</header>
+		</div>
+		<!-- 头像 -->
+		<div style="text-align: center;margin-top: 150px;">
+			<!-- border-radius 图片变圆 -->
+			<img src="images/java.jpg" style="border-radius: 40%;width: 150px;" />
+		</div>
+		<!-- 登录表单 -->
+		<div>
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>用户名</label>
+					<input type="text" class="mui-input-clear" placeholder="请输入用户名">
+				</div>
+				<div class="mui-input-row">
+					<label>密码</label>
+					<input type="password" class="mui-input-password" placeholder="请输入密码">
+				</div>
+				<div class="mui-button-row">
+					<button type="button" class="mui-btn mui-btn-success" style="width: 70%;">登录</button>
+				</div>
+			</form>
+			<div style="text-align: center;">
+				<a id="register_button">新用户</a> &nbsp;<span>| &nbsp;</span> <a>忘记密码</a>
+			</div>
+		</div>
+	</body>
+</html>
