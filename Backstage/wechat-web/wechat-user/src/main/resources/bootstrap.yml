@@ -1,0 +1,5 @@
+spring:
+  cloud:
+    config:
+      name: application
+      profile: user,eureka-client
