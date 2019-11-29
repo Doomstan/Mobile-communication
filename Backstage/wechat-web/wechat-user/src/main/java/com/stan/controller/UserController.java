@@ -29,6 +29,7 @@ public class UserController {
     //测试
     @RequestMapping("test")
     public String test() {
+        System.out.println("UserController.test");
         return "test";
     }
 
