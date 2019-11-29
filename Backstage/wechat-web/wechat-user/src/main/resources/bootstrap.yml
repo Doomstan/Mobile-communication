@@ -3,3 +3,4 @@ spring:
     config:
       name: application
       profile: user,eureka-client
+
