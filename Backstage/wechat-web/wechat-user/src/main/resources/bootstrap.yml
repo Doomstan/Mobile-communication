@@ -3,4 +3,8 @@ spring:
     config:
       name: application
       profile: user,eureka-client
-
+logging:
+  level:
+    com:
+      stan:
+        mapper: debug
