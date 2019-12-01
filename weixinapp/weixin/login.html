@@ -7,6 +7,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="css/mui.css" rel="stylesheet" />
 		<script src="js/mui.js"></script>
+		<script src="js/wechat_utils.js"></script>
 		<script type="text/javascript">
 			mui.init();
 
@@ -19,11 +20,58 @@
 					//plus.nativeUI.alert("你好")
 					//跳转到注册页面
 					plus.webview.open("register.html", "register.html");
-				})
+				});
+
+				//登录
+				document.getElementById("login").addEventListener("tap", function() {
+
+					//非空校验
+					var inputObject = document.getElementsByTagName("input");
+
+					for (var i = 0; i < inputObject.length; i++) {
+						var attribut = inputObject[i].getAttribute("name").value;
+						var value = inputObject[i].value;
+						if (value == '') {
+							plus.nativeUI.toast(attribut + "为空")
+							return;
+						}
+					}
+
+					var param = new Object();
+
+					//获取值
+					param.username = document.getElementById("username").value;
+					param.password = document.getElementById("password").value;
+
+					//异步请求
+					util.ajax({
+
+						url: ip.serverip + "/user/login",
+						data: param,
+						success: function(result) {
+							if (result.code == "ok") {
+								//校验成功 存放到 plus 的数据库中
+								util.setUser(result.data);
+								//关闭登录页面 跳转到主页
+								var current = 	plus.webview.currentWebview();
+								//跳转页面
+								plus.webview.open("index.html","index.html");
+								
+								current.close();
+								
+							}else{
+								plus.nativeUI.toast(result.msg);
+							}
+
+						}
+
+					});
+				});
+
 			})
 		</script>
 	</head>
-	
+
 	<body>
 		<div style="float: none;">
 			<!-- 标题 -->
@@ -41,14 +89,14 @@
 			<form class="mui-input-group">
 				<div class="mui-input-row">
 					<label>用户名</label>
-					<input type="text" class="mui-input-clear" placeholder="请输入用户名">
+					<input type="text" class="mui-input-clear" id="username" name="用户名" value="admin" placeholder="请输入用户名">
 				</div>
 				<div class="mui-input-row">
 					<label>密码</label>
-					<input type="password" class="mui-input-password" placeholder="请输入密码">
+					<input type="password" class="mui-input-password" id="password" name="密码" value="admin" placeholder="请输入密码">
 				</div>
 				<div class="mui-button-row">
-					<button type="button" class="mui-btn mui-btn-success" style="width: 70%;">登录</button>
+					<button type="button" id="login" class="mui-btn mui-btn-success" style="width: 70%;">登录</button>
 				</div>
 			</form>
 			<div style="text-align: center;">
