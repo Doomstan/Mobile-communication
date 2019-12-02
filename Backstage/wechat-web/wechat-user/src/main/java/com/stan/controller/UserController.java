@@ -1,12 +1,15 @@
 package com.stan.controller;
 
+import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.stan.entity.User;
 import com.stan.entity.base.BusinessException;
 import com.stan.entity.base.ResultEntity;
 import com.stan.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.Random;
@@ -47,9 +50,10 @@ public class UserController {
     }
 
     /**
-     *  用户注册
-     *  1:用户名唯一性校验
-     *  2:手机号码校验
+     * 用户注册
+     * 1:用户名唯一性校验
+     * 2:手机号码校验
+     *
      * @param user
      * @return
      */
@@ -76,18 +80,67 @@ public class UserController {
         return ResultEntity.success();
     }
 
+    /**
+     * 登录
+     *
+     * @param user
+     * @return
+     */
     @RequestMapping("login")
-    public ResultEntity login(User user){
+    public ResultEntity login(User user) {
 
         System.out.println(user);
         System.out.println("UserController.login");
-        user = userService.getUserByName(user);
+        user = userService.getUserByNameAndPassword(user);
         System.out.println(user);
         //失败
-        if (user == null){
+        if (user == null) {
             return ResultEntity.error("用户密码校验失败");
         }
-        return  ResultEntity.success(user);
+        //密码置空
+        user.setPassword(null);
+        return ResultEntity.success(user);
     }
+
+    /**
+     * 查询好友
+     *
+     * @return
+     */
+    @RequestMapping("getUserByUsername")
+    public ResultEntity getUserByUsername(String username) {
+
+        User user = userService.getUserByUsername(username);
+
+        if (user != null) {
+            return ResultEntity.success(user);
+        } else {
+            return ResultEntity.error("不存在");
+        }
+
+    }
+
+
+    /**
+     * 暴露出服务: 根据用户名字查询出用户信息 密码置空 服务暴露出去
+     * @param username
+     * @return
+     */
+    @RequestMapping("findUserByUsername")
+    public User findUserByUsername(String username){
+        System.out.println("暴露出去的服务"+"UserController.findUserByUsername");
+        User user = userService.getUserByUsername(username);
+        return  user;
+    }
+
+
+
+    @RequestMapping("findGetUsrById")
+    public User findGetUsrById(Integer uid){
+
+        User user = userService.selectById(uid);
+        return  user;
+    }
+
 
 }

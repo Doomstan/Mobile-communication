@@ -29,5 +29,13 @@ public interface IUserService extends IBaseService<User> {
      * @param user
      * @return
      */
-    User getUserByName(User user);
+    User getUserByNameAndPassword(User user);
+
+    /**
+     * 查询朋友
+     * @param username
+     * @return
+     */
+    User getUserByUsername(String username);
+
 }

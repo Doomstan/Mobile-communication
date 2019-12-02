@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    config:
+      uri: http://localhost:8888
+      name: application
+      profile: datasource,eureka-client,friend
+logging:
+  level:
+    com:
+      stan:
+        mapper: debug

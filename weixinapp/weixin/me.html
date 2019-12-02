@@ -21,11 +21,19 @@
 				
 				//给头像li 绑定触屏事件
 				document.getElementById("min_head_but").addEventListener("tap",function(){
-					
+					 
 					//打开头像的展示界面
 					plus.webview.open("showHead.html","showHead.html");
 				});
 				
+				document.getElementById("logout_but").addEventListener("tap",function(){
+					
+					//注册
+					util.setUser(null);
+					var cpage = plus.webview.currentWebview();
+					plus.webview.open("login.html","login.html");
+					cpage.close();
+				});
 
 			});
 			

@@ -11,40 +11,31 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Author: Stan
- * Date: 2019/11/29 19:33
- * Content:
- */
 
+/**
+ * 好友认证实体类
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("t_user")
-public class User implements Serializable {
-
-
+@TableName("t_friend_apply")
+public class FriendApply implements Serializable {
 
     @TableId(type = IdType.AUTO)
     private Integer id;
-
-    private String username;
-
-    private String password;
-
-    private String phone;
-
-    private String nickname;
-
+    //谁发的
+    private Integer fid;
+    //发给谁
+    private Integer tid;
+    //消息
+    private String msg;
+    //事件
     @TableField(value = "create_time")
     private Date createTime;
+    //状态 1:等待  2：拒绝 3：同意
+    private Integer status;
 
-    @TableField(value = "max_head")
-    private String maxHead;
-
-    @TableField(value = "min_head")
-    private String minHead;
-
-
-
+    //存放来着谁的用户对象
+    @TableField(exist = false)
+    private User friend;
 }

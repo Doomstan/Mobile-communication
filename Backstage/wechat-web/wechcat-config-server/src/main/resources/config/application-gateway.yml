@@ -7,6 +7,10 @@ spring:
         - id: user-web
           uri: lb://USER-WEB
           predicates:
-            - Path=/user/**
+            - Path=/user/**,/res/**
+        - id: friend-web
+          uri: lb://WECHAT-FRIEND
+          predicates:
+            - Path=/friendApply/**
   application:
     name: wechat-gateway

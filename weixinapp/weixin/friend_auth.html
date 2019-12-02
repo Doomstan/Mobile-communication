@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.css" rel="stylesheet" />
+		<script src="js/mui.js"></script>
+		<script src="js/wechat_utils.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			
+			mui.plusReady(function () {
+				
+				// 获取添加的好友名称
+			    var username = plus.webview.currentWebview().username; 
+				
+				document.getElementById("sendReq_but").addEventListener("tap",function(){
+					
+					// 验证信息
+					var content = document.getElementById("content").value;
+					
+					// 获取当前登录的用户
+					var user = util.getUser();
+					
+					// 封装对象
+					var param = new Object();
+					param.fid = user.id;
+					param.username = username;
+					param.msg = content;
+					
+								
+					// 发送请求
+					util.ajax({
+						url:url.friendapply_add_url,
+						data:param,
+						success:function(resp){
+							console.info(JSON.stringify(resp))
+							if(resp.code == "ok"){
+								var cpage = plus.webview.currentWebview();
+								plus.webview.open("breakthrough.html","breakthrough.html");
+								cpage.close();
+							}else{
+								plus.nativeUI.toast(resp.msg);
+							}
+						}
+					})
+				})
+			
+			})
+			
+			
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">好友认证</h1>
+		</header>
+		
+		<div style="margin-top: 50px;">
+			<textarea id="content">我是。。。</textarea>
+			<div class="mui-button-row">
+				<button type="button"  id="sendReq_but" class="mui-btn mui-btn-success" style="width: 80%;">发送</button>
+			</div>
+		</div>
+	</body>
+
+</html>

@@ -40,20 +40,33 @@ public class UserServiceImpl extends BaseServiceimpl<User> implements IUserServi
     public boolean uniquenessUserName(String phone) {
 
         EntityWrapper wrapper = new EntityWrapper();
-        wrapper.eq("phone",phone);
+        wrapper.eq("phone", phone);
         Integer integer = userMapper.selectCount(wrapper);
-        return integer != 0 ? true :false;
+        return integer != 0 ? true : false;
     }
 
 
     /**
      * 登录
+     *
      * @param user
      * @return
      */
     @Override
-    public User getUserByName(User user) {
+    public User getUserByNameAndPassword(User user) {
         user = userMapper.selectOne(user);
+        return user;
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+
+        User user = new User();
+        user.setUsername(username);
+        user = userMapper.selectOne(user);
+        if (user != null) {
+            user.setPassword(null);
+        }
         return user;
     }
 }

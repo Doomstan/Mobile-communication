@@ -7,22 +7,74 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="css/mui.css" rel="stylesheet" />
 		<script src="js/mui.js"></script>
-		<script src="js/wechat_utils.js" ></script>
+		<script src="js/wechat_utils.js"></script>
 		<script type="text/javascript">
-			mui.init()
-				
-			mui.plusReady(function(){
-				
-				//替换头像
-				var user = util.getUser();
-				if(user.maxHead != null && user.maxHead != ''){
-					document.getElementById("showMaxHead").src = user.maxHead;	
-				}
-				
-				
-			})
-			
-			
+			mui.init();
+						mui.plusReady(function () {
+							
+							var user = util.getUser();
+							
+							if(user.maxHead != null){
+								document.getElementById("showMaxHead").src = user.maxHead;
+							}
+							
+							
+						    document.getElementById("upload_but").addEventListener("tap",function(){
+								
+								console.info(url.upload_head_url);
+								
+								// 打开本地相册
+								plus.gallery.pick( function(path){
+								    
+									// 1.创建一个上传任务对象
+									var task = plus.uploader.createUpload(url.upload_head_url, 
+											{},
+											function ( t, status ) {
+												console.info(t);
+												console.info(t.responseText);
+												// 因为返回的字符串，所以需要转成JSON对象
+												var resp = JSON.parse(t.responseText);
+												// 上传完成
+												if(resp.code == "ok"){
+													
+													var maxHead = resp.data.maxHead;
+													var minHead = resp.data.minHead;
+													
+													// 显示用户上传的头像
+													document.getElementById("showMaxHead").src = maxHead;
+													
+													// 修改本机中的用户信息
+													user.maxHead = maxHead;
+													user.minHead = minHead;
+													
+													// 保存
+													util.setUser(user);
+													
+													// 按一次返回键
+													mui.back();
+													
+													//指定调用某个页面中的某个函数
+													plus.webview.getWebviewById("me.html").evalJS("updateMinHead()");
+													
+												}else{
+													plus.nativeUI.toast("上传失败");
+												}
+											}
+										);
+										
+									// 2. 添加上传的文件
+									task.addFile(path, {key:"file"});
+									
+									// 3.设置其他的参数
+									task.addData("uid",user.id+"");
+									
+									// 4.启动上传任务
+									task.start();
+									
+								});
+								
+							})
+						})
 		</script>
 	</head>
 
