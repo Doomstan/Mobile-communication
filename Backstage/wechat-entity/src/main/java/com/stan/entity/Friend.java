@@ -8,34 +8,31 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-import java.util.Date;
-
-
 /**
- * 好友认证实体类
+ * Author: Stan
+ * Date: 2019/12/3 9:57
+ * Content:
  */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("t_friend_apply")
-public class FriendApply implements Serializable {
+@TableName("t_friend")
+public class Friend {
 
-    @TableId(type = IdType.AUTO)
+    @TableId(type= IdType.AUTO)
     private Integer id;
-    //谁发的
+
+    private Integer uid;
+
     private Integer fid;
-    //发给谁
-    private Integer tid;
-    //消息
-    private String msg;
-    //事件
-    @TableField(value = "create_time")
-    private Date createTime;
-    //状态 1:等待  2：同意  3：拒绝
+
     private Integer status;
 
-    //存放来着谁的用户对象
+    private String remark;
+
     @TableField(exist = false)
-    private User friend;
+    private User friendObj; // 好友对象
+
+
 }

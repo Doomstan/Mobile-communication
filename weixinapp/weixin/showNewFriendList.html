@@ -20,7 +20,6 @@
 						"uid":user.id
 					},
 					success: function(resp) {
-						console.info(JSON.stringify(resp.data))
 						if (resp.code == "ok") {
 							var nfList = resp.data;
 							var html = "";
@@ -56,7 +55,7 @@
 										'<button type="button"  class="mui-btn mui-btn-success" style="width: 15%;right: 100px;">已接受</button>';
 								} else if (newF.status == 3) {
 									html +=
-										'<button type="button"  class="mui-btn mui-btn-success" style="width: 15%;right: 100px;">已拒绝</button>';
+										'<button type="button"  class="mui-btn mui-btn-outlined" style="width: 15%;right: 100px;">已拒绝</button>';
 								}
 
 
@@ -75,7 +74,7 @@
 						var status = this.getAttribute("num");
 						var fapplyId = this.getAttribute("id");
 
-						util.ajax({
+						util.ajax({ 
 							url: url.updateFriendApplyStatus_url,
 							data: {
 								"status": status,
@@ -92,9 +91,14 @@
 			});
 		</script>
 	</head>
-
-	<body>
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 class="mui-title">标题</h1>
+	</header>
+	<body style="margin-top: 44px;">
+		
 		<ul class="mui-table-view" id="showNFList">
+			
 		</ul>
 
 	</body>

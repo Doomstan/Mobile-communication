@@ -45,6 +45,7 @@ public class User implements Serializable {
     @TableField(value = "min_head")
     private String minHead;
 
+    private String pinyin;
 
 
 }

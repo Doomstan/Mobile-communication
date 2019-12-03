@@ -1,13 +1,15 @@
 //设置 路由ip地址
 window.ip = {
 	serverip: "http://10.20.151.27:9999"
-} 
+}
 
 window.url = {
 	upload_head_url: ip.serverip + "/res/uploadFile",
-	getuserbyusername_url:ip.serverip+"/user/getUserByUsername",
-	friendapply_add_url: ip.serverip+"/friendApply/addFriendApply", 
-	getMyFriendApplyList_url: ip.serverip+"/friendApply/getMyFriendApplyList",
+	getuserbyusername_url: ip.serverip + "/user/getUserByUsername",
+	friendapply_add_url: ip.serverip + "/friendApply/addFriendApply",
+	getMyFriendApplyList_url: ip.serverip + "/friendApply/getMyFriendApplyList",
+	updateFriendApplyStatus_url: ip.serverip + "/friendApply/updateFriendApplyStatus",
+	getFriendListByUid_url: ip.serverip + "/friend/getFriendList"
 }
 
 //设置公共方法
@@ -15,8 +17,8 @@ window.url = {
  *  utik
  */
 window.util = {
-	
-	
+
+
 	//设置ajax
 	/**
 	 * 
@@ -24,7 +26,7 @@ window.util = {
 	 * @param {Object} param : 数据
 	 */
 	ajax: function(param) {
-	plus.nativeUI.showWaiting(); // 显示等待的圈
+		plus.nativeUI.showWaiting(); // 显示等待的圈
 		mui.ajax(
 			param.url, //请求地址
 			{
@@ -47,11 +49,17 @@ window.util = {
 	},
 	//存储到数据库中  key - value 形式    value 字符串 所以要处理一下
 	setUser: function(user) {
-		plus.storage.setItem("login_user",JSON.stringify(user));
+		plus.storage.setItem("login_user", JSON.stringify(user));
 	},
 	//获取用户  且转为json 对象
 	getUser: function() {
 		return JSON.parse(plus.storage.getItem("login_user"));
+	},
+	setFriendList: function(fList) {
+		plus.storage.setItem("friendList", JSON.stringify(fList));
+	},
+	getFriendList: function() {
+		return JSON.parse(plus.storage.getItem("friendList"));
 	}
 
 }

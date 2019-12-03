@@ -11,6 +11,6 @@ spring:
         - id: friend-web
           uri: lb://WECHAT-FRIEND
           predicates:
-            - Path=/friendApply/**
+            - Path=/friendApply/**,/friend/**
   application:
     name: wechat-gateway
