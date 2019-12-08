@@ -1,0 +1,21 @@
+spring:
+  cloud:
+    config:
+      name: application
+      profile: user,eureka-client
+logging:
+  level:
+    com:
+      stan:
+        mapper: debug
+#fdfs:
+#  connect-timeout: 10000
+#  tracker-list:
+#    - 139.9.53.186:22122
+#  so-timeout: 10000
+#  thumb-image:
+#    height: 100
+#    width: 100
+#
+##fastdfs服务地址
+#fastdfs: http://139.9.53.186:8080
