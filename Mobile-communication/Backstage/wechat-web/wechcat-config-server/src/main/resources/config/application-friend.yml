@@ -1,6 +1,0 @@
-server:
-  port: 8060
-
-spring:
-  application:
-    name: wechat-friend
